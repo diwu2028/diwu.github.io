@@ -1,0 +1,9 @@
+GitHub 更新步骤：
+1. 解压此 ZIP。
+2. GitHub 仓库根目录 → Add file → Upload files。
+3. 同时拖入 index.html、editor.html 和整个 assets 文件夹（保持文件夹名称）。
+4. 等所有文件上传完成，再点击 Commit changes。
+5. 等 Actions 最新部署变为绿色勾，然后刷新网站。
+不要上传 ZIP 本身；不要只上传 index.html。
+所有图片保留原始像素尺寸，解码后的 RGBA 像素与原图完全一致；JPEG 原样保留，PNG 仅做无损编码优化。
+以后编辑时保留 assets 文件夹，导出的 index.html 继续引用它；若新增大量原图再次超限，可再进行相同拆分。

@@ -43,7 +43,7 @@ body.editing .legacy-canvas .paper-info{min-height:320px}
 const BASE=JSON.parse(document.querySelector('#site-data').textContent);let model=structuredClone(BASE),editing=new URLSearchParams(location.search).has('edit')||location.pathname.endsWith('/editor.html'),preview=false,saveTimer,selection=null;
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const url=u=>/^(https?:|mailto:|#)/i.test(u||'')?u:'#';
-const imageURL=u=>/^data:image\/(png|jpeg|webp|gif);base64,/i.test(u||'')||/^https?:\/\//i.test(u||'')?u:'';
+const imageURL=u=>/^data:image\/(png|jpeg|webp|gif);base64,/i.test(u||'')||/^https?:\/\//i.test(u||'')||/^assets\/[a-z0-9-]+\.(png|jpg|jpeg|webp|gif)$/i.test(u||'')?u:'';
 function clean(html){let doc=new DOMParser().parseFromString('<div>'+html+'</div>','text/html');const root=doc.body.firstElementChild;function walk(n){for(const c of [...n.children]){if(['SCRIPT','STYLE','IFRAME','OBJECT','SVG'].includes(c.tagName)){c.remove();continue}walk(c);if(!['B','STRONG','I','EM','U','A','BR','P','SPAN','DIV'].includes(c.tagName)){c.replaceWith(...c.childNodes);continue}const h=c.getAttribute('href');[...c.attributes].forEach(a=>c.removeAttribute(a.name));if(c.tagName==='A'&&h)c.setAttribute('href',url(h));}}walk(root);return root.innerHTML;}
 function get(path){return path.split('.').reduce((o,k)=>o[k],model)}function set(path,value){const a=path.split('.'),k=a.pop();a.reduce((o,k)=>o[k],model)[k]=value;}
 function edit(path,tag='span',cls=''){return `<${tag} class="${cls}" data-element="${path}" ${editing&&!preview?`contenteditable="true" data-edit="${path}" spellcheck="false"`:''}>${clean(get(path))}</${tag}>`;}
